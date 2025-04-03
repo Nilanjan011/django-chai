@@ -1,0 +1,26 @@
+{% extends 'layouts.html' %}
+{% block title %}
+    Tweet list
+{% endblock %}
+{% block content %}
+    <a href="{% url 'tweet_create' %}">Create a new tweet</a>
+    <hr>
+    <h4>Tweet list 
+        <!-- {{user.id}} -->
+    </h4>
+    {% for tweet in tweets %}
+        {% if tweet.photo %}
+        <img src="{{ tweet.photo.url }}" alt="tweet photo" width="200" height="200">
+        {% else %}
+            <p>No photo available</p>
+        {% endif %}
+        
+        <p><a href="{% url 'tweet_edit' tweet.id %}">{{ tweet.text }}</a></p>
+        <p>{{ tweet.created_at }}</p>
+        <div class="row">
+            <a class="btn btn-success" href="{% url 'tweet_edit' tweet.id %}">Edit</a>
+            <a onclick="return confirm('Are you sure you want to delete this tweet?')" class="btn btn-danger" href="{% url 'tweet_delete' tweet.id %}">Delete</a>   
+        </div>
+        <hr>    
+    {% endfor %}
+{% endblock %}
